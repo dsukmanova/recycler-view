@@ -17,6 +17,10 @@ import butterknife.BindView;
 import ru.yandex.yamblz.R;
 
 public class ContentFragment extends BaseFragment {
+    private boolean bordersOn = false;
+    private int bordersWidth = 3;
+    private MyItemDecoration myItemDecoration;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +46,16 @@ public class ContentFragment extends BaseFragment {
         int itemId = item.getItemId();
         switch (itemId){
             case R.id.borders:
+                if (bordersOn){
+                    rv.removeItemDecoration(myItemDecoration);
+                    bordersOn = false;
+                } else {
+                    rv.addItemDecoration(myItemDecoration);
+                    bordersOn = true;
+                }
                 break;
         }
+        rv.getAdapter().notifyDataSetChanged();
         return super.onOptionsItemSelected(item);
     }
 
@@ -58,7 +70,6 @@ public class ContentFragment extends BaseFragment {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(rv);
 
-        //rv.addItemDecoration(new MyItemDecoration());
-
+        myItemDecoration = new MyItemDecoration(bordersWidth);
     }
 }
