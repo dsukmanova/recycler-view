@@ -65,7 +65,6 @@ public class MyItemTochHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public void onMoved(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, int fromPos, RecyclerView.ViewHolder target, int toPos, int x, int y) {
         super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y);
-        //itemsChangedDecorator.setChange(true);
         itemsChangedDecorator.setFromPos(fromPos);
         itemsChangedDecorator.setToPos(toPos);
     }

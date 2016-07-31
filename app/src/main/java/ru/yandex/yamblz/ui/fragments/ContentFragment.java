@@ -3,6 +3,7 @@ package ru.yandex.yamblz.ui.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -21,6 +22,9 @@ public class ContentFragment extends BaseFragment {
     private int bordersWidth = 3;
     private MyItemDecoration myItemDecoration;
     private ItemsChangedDecorator itemsChangedDecorator;
+    private GridLayoutManager gridLayoutManager;
+    private int columnsNum = 1;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +52,14 @@ public class ContentFragment extends BaseFragment {
         switch (itemId){
             case R.id.borders:
                 switchBordersMode();
+                break;
+            case R.id.plusColumns:
+                columnsNum ++;
+                gridLayoutManager.setSpanCount(columnsNum);
+                break;
+            case R.id.minusColumns:
+                columnsNum--;
+                gridLayoutManager.setSpanCount(columnsNum);
                 break;
         }
         rv.getAdapter().notifyDataSetChanged();
@@ -80,5 +92,7 @@ public class ContentFragment extends BaseFragment {
         if (bordersOn) rv.addItemDecoration(myItemDecoration);
 
         rv.addItemDecoration(itemsChangedDecorator);
+        gridLayoutManager = new GridLayoutManager(getContext(), columnsNum);
+        rv.setLayoutManager(gridLayoutManager);
     }
 }
