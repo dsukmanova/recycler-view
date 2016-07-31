@@ -20,6 +20,7 @@ public class ContentFragment extends BaseFragment {
     private boolean bordersOn = false;
     private int bordersWidth = 3;
     private MyItemDecoration myItemDecoration;
+    private ItemsChangedDecorator itemsChangedDecorator;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,11 +71,14 @@ public class ContentFragment extends BaseFragment {
         ContentAdapter contentAdapter = new ContentAdapter();
         rv.setAdapter(contentAdapter);
 
-        ItemTouchHelper.Callback callback = new MyItemTochHelperCallback(contentAdapter);
+        itemsChangedDecorator = new ItemsChangedDecorator();
+        ItemTouchHelper.Callback callback = new MyItemTochHelperCallback(contentAdapter,itemsChangedDecorator);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(rv);
 
         myItemDecoration = new MyItemDecoration(bordersWidth);
         if (bordersOn) rv.addItemDecoration(myItemDecoration);
+
+        rv.addItemDecoration(itemsChangedDecorator);
     }
 }

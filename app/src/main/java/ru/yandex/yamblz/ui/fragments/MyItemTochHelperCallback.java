@@ -14,9 +14,15 @@ import android.view.View;
 
 public class MyItemTochHelperCallback extends ItemTouchHelper.Callback {
     MyItemTouchHelperAdapter myItemTouchHelperAdapter;
+    ItemsChangedDecorator itemsChangedDecorator;
 
     MyItemTochHelperCallback(MyItemTouchHelperAdapter myItemTouchHelperAdapter) {
         this.myItemTouchHelperAdapter = myItemTouchHelperAdapter;
+    }
+
+    MyItemTochHelperCallback(MyItemTouchHelperAdapter myItemTouchHelperAdapter,ItemsChangedDecorator decorator) {
+        this.myItemTouchHelperAdapter = myItemTouchHelperAdapter;
+        this.itemsChangedDecorator = decorator;
     }
 
     @Override
@@ -29,7 +35,7 @@ public class MyItemTochHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
         myItemTouchHelperAdapter.onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
-        return false;
+        return true;
     }
 
     @Override
@@ -54,5 +60,13 @@ public class MyItemTochHelperCallback extends ItemTouchHelper.Callback {
             c.drawRect(rectLeft, itemView.getTop(), rectRight, itemView.getBottom(), paint);
 
         }
+    }
+
+    @Override
+    public void onMoved(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, int fromPos, RecyclerView.ViewHolder target, int toPos, int x, int y) {
+        super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y);
+        //itemsChangedDecorator.setChange(true);
+        itemsChangedDecorator.setFromPos(fromPos);
+        itemsChangedDecorator.setToPos(toPos);
     }
 }
