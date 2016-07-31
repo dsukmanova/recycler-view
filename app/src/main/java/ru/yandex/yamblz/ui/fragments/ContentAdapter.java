@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -44,6 +45,21 @@ class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentHolder> 
     public void onItemDissmiss(int position) {
         removeItem(position);
         notifyItemRemoved(position);
+    }
+
+    @Override
+    public void onItemMove(int fromPosition, int toPosition) {
+        int startPos = fromPosition;
+        int endPos = toPosition;
+        if (fromPosition > toPosition) {
+            startPos = toPosition;
+            endPos = fromPosition;
+        }
+        for (int i = startPos; i < endPos; i++) {
+            Collections.swap(colors, i, i + 1);
+        }
+        notifyItemMoved(fromPosition,toPosition);
+        return;
     }
 
     static class ContentHolder extends RecyclerView.ViewHolder {

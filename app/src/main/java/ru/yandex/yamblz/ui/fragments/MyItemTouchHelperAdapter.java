@@ -6,4 +6,6 @@ package ru.yandex.yamblz.ui.fragments;
 
 public interface MyItemTouchHelperAdapter {
     void onItemDissmiss(int position);
+
+    void onItemMove(int fromPosition, int toPosition);
 }
