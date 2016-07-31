@@ -13,7 +13,7 @@ import java.util.Random;
 
 import ru.yandex.yamblz.R;
 
-class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentHolder> {
+class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentHolder> implements MyItemTouchHelperAdapter {
 
     private final Random rnd = new Random();
     private final List<Integer> colors = new ArrayList<>();
@@ -40,6 +40,12 @@ class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentHolder> 
         return colors.get(position);
     }
 
+    @Override
+    public void onItemDissmiss(int position) {
+        removeItem(position);
+        notifyItemRemoved(position);
+    }
+
     static class ContentHolder extends RecyclerView.ViewHolder {
         ContentHolder(View itemView) {
             super(itemView);
@@ -49,5 +55,14 @@ class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentHolder> 
             itemView.setBackgroundColor(color);
             ((TextView) itemView).setText("#".concat(Integer.toHexString(color).substring(2)));
         }
+    }
+
+    public void removeItem(int index) {
+        this.colors.remove(index);
+    }
+
+    public void setColor(List<Integer> colors) {
+        this.colors.clear();
+        this.colors.addAll(colors);
     }
 }

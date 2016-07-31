@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,12 @@ public class ContentFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv.setAdapter(new ContentAdapter());
+        ContentAdapter contentAdapter = new ContentAdapter();
+        rv.setAdapter(contentAdapter);
+
+        ItemTouchHelper.Callback callback = new MyItemTochHelperCallback(contentAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(rv);
+
     }
 }
