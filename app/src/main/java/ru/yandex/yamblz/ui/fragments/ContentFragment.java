@@ -29,6 +29,9 @@ public class ContentFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null){
+            columnsNum = savedInstanceState.getInt("columnsNum");
+        }
         setHasOptionsMenu(true);
     }
 
@@ -94,5 +97,11 @@ public class ContentFragment extends BaseFragment {
         rv.addItemDecoration(itemsChangedDecorator);
         gridLayoutManager = new GridLayoutManager(getContext(), columnsNum);
         rv.setLayoutManager(gridLayoutManager);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("columnsNum",columnsNum);
     }
 }
