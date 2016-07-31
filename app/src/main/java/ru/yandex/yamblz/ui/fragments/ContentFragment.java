@@ -46,17 +46,21 @@ public class ContentFragment extends BaseFragment {
         int itemId = item.getItemId();
         switch (itemId){
             case R.id.borders:
-                if (bordersOn){
-                    rv.removeItemDecoration(myItemDecoration);
-                    bordersOn = false;
-                } else {
-                    rv.addItemDecoration(myItemDecoration);
-                    bordersOn = true;
-                }
+                switchBordersMode();
                 break;
         }
         rv.getAdapter().notifyDataSetChanged();
         return super.onOptionsItemSelected(item);
+    }
+
+    private void switchBordersMode (){
+        if (bordersOn){
+            rv.removeItemDecoration(myItemDecoration);
+            bordersOn = false;
+        } else {
+            rv.addItemDecoration(myItemDecoration);
+            bordersOn = true;
+        }
     }
 
     @Override
@@ -71,5 +75,6 @@ public class ContentFragment extends BaseFragment {
         itemTouchHelper.attachToRecyclerView(rv);
 
         myItemDecoration = new MyItemDecoration(bordersWidth);
+        if (bordersOn) rv.addItemDecoration(myItemDecoration);
     }
 }
